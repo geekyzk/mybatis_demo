@@ -1,5 +1,6 @@
 package com.em248;
 
+import com.em248.dao.PhotoMapper;
 import com.em248.pojo.Photo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -22,8 +23,9 @@ public class Application {
         InputStream inputStream = Resources.getResourceAsStream("mybatisConfig.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        Photo o = (Photo)sqlSession.selectOne("com.em248.dao.PhotoMapper","4fcd1a6d-67f7-4929-8b60-e446c8c015be");
-        System.out.println(o.getName());
+        PhotoMapper mapper = sqlSession.getMapper(PhotoMapper.class);
+        Photo photo = mapper.selectByPrimaryKey("4fcd1a6d-67f7-4929-8b60-e446c8c015be");
+        System.out.println(photo.getName());
     }
 
 
